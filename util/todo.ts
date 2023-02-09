@@ -16,3 +16,7 @@ export async function deleteTodo(request:APIRequestContext,id:number){
     const respons = await request.delete(`/v1/todo/${id}`)
     return await respons.status()
 }
+
+export async function updateTodo(request:APIRequestContext,body:{}){
+    
+}
