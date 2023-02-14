@@ -11,17 +11,19 @@ test.describe("GetTodo Testcases",()=>{
     })
     test("get existing todo should work",async({request},testInfo)=>{
         const id = testInfo['id']
+        
         const {status,body} = await getTodo(request,id)
+        console.log(body)
         expect(body).not.toBe(null)
         expect(status).toBe(200)
     })
 
-    test("delete created",async({request},testInfo)=>{
+    test.afterAll(async({request},testInfo)=>{
         const id = testInfo['id']
         const res = await deleteTodo(request,id)})
 })
 test("get non existing todo should work",async({request},testInfo)=>{
-    const id = 34
+    const id = 0
     const {status,body} = await getTodo(request,id)
     expect(body).not.toBe(null)
     expect(status).toBe(404)
@@ -29,7 +31,7 @@ test("get non existing todo should work",async({request},testInfo)=>{
 
 test.describe("create and Get Multiple todo",()=>{
     var id:number[] = new Array(5);
-        test("Create Multiple Todo's",async({request},testInfo)=>{
+        test.beforeAll(async({request},testInfo)=>{
 
             for(let i=0;i<6;i++){
                 const {status,body} = await createTodo(request,{title:"title and status as body",status:"ACTIVE"})
@@ -39,6 +41,11 @@ test.describe("create and Get Multiple todo",()=>{
         }) 
         test("Get Multiple Todo's",async({request},testInfo)=>{
             const{status,body}= await getTodoAll(request)
-
+            expect(status).toBe(200)
+            expect(body).not.toBe(null)
         })
+
+        test.afterAll(async({request},id[5])=>{
+        //const id = testInfo['id']
+        const res = await deleteTodo(request,ID)})
 })
