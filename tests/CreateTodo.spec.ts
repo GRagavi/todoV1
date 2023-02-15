@@ -1,24 +1,24 @@
 import {test,expect, request} from "@playwright/test"
 import { createTodo, deleteTodo } from "../util/todo"
-
+import { CREATEDENTRY, INVALIDCODE, INVALIDDATA, JSONPARSEError, NULL, STATUS, SUCCESSCODE, TODOTITLE, UNDEFINED } from "./Property" 
 
 test.describe("Create Todo_PositiveCases",()=>{
-    test("Creation of todo should work without passing status field",async({request},testInfo)=>{
+    test(TODOTITLE.CREATE_TODO_WITHOUT_STATUS,async({request},testInfo)=>{
 
-        const {status,body} = await createTodo(request,{title:"only title as body"})
-         expect(status).toBe(201)
-         expect(body.id).not.toBe(null)
-         expect(body.title).toBe("only title as body")
-         expect(body.status).toBe("ACTIVE")
+        const {status,body} = await createTodo(request,{title:testInfo.title})
+         expect(status).toBe(CREATEDENTRY)
+         expect(body.id).not.toBe(NULL)
+         expect(body.title).toBe(TODOTITLE.CREATE_TODO_WITHOUT_STATUS)
+         expect(body.status).toBe(STATUS[0])
          testInfo['id'] = body.id
         
      })
-     test("Creation of todo should work when passed status field",async({request},testInfo)=>{
-          const {status,body} = await createTodo(request,{title:"title and status as body",status:"ACTIVE"})
-          expect(status).toBe(201)
-          expect(body.id).not.toBe(null)
-          expect(body.title).toBe("title and status as body")
-          expect(body.status).toBe("ACTIVE")
+     test(TODOTITLE.CREATE_TODO_WITH_STATUS,async({request},testInfo)=>{
+          const {status,body} = await createTodo(request,{title:testInfo.title,status:STATUS[0]})
+          expect(status).toBe(CREATEDENTRY)
+          expect(body.id).not.toBe(NULL)
+          expect(body.title).toBe(testInfo.title)
+          expect(body.status).toBe(STATUS[0])
           testInfo['id'] = body.id
           
       })
@@ -26,29 +26,27 @@ test.describe("Create Todo_PositiveCases",()=>{
       test.afterEach(async({request},testInfo)=>{
             const id = testInfo['id']
             const resp = await deleteTodo(request,id)
-            expect(resp).toBe(200)
+            expect(resp).toBe(SUCCESSCODE)
         })
 })
 
 
 test.describe("CreateTodo_NegativeCases",()=>{
-    test("Creation of Todo should give 400 when title field is not passed",async({request},testInfo)=>{
-
-        const {status,body} = await createTodo(request,{status:"ACTIVE"})
-         expect(status).toBe(400)
-         expect(body.id).toBe(undefined)
-         expect(body.title).toBe(undefined)
-         expect(body.status).toBe(undefined)
+    test(TODOTITLE.CREATE_TODO_WITHOUT_TITLE,async({request},testInfo)=>{
+        const {status,body} = await createTodo(request,{status:STATUS[0]})
+         expect(status).toBe(INVALIDCODE)
+         expect(body.id).toBe(UNDEFINED)
+         expect(body.title).toBe(UNDEFINED)
+         expect(body.status).toBe(UNDEFINED)
          
      })
     
-     test("Creation of Todo should give 400 when status value is not either ACTIVE or DONE",async({request},testInfo)=>{
-    
-        const {status,body} = await createTodo(request,{title:"Error test",status:"status"})
-         expect(status).toBe(400)
-         expect(body.id).toBe(undefined)
-         expect(body.message).toContain("JSON parse error: Cannot deserialize value of type `com.sedintechnologies.qa.todoapi.v1.models.TodoStatus` from String \"status\": not one of the values accepted for Enum class: [DONE, ACTIVE]")
-         expect(body.status).toBe(undefined)
+     test(TODOTITLE.CREATE_TODO_WITH_INVALID_STATUS,async({request},testInfo)=>{
+        const {status,body} = await createTodo(request,INVALIDDATA)
+         expect(status).toBe(INVALIDCODE)
+         expect(body.id).toBe(UNDEFINED)
+         expect(body.message).toContain(JSONPARSEError)
+         expect(body.status).toBe(UNDEFINED)
          
      })
 })
