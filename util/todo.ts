@@ -8,10 +8,10 @@ export async function createTodo(request:APIRequestContext,body:{title?:string,s
        headers:{
         'content-Type': 'application/json'
        }
-    })
-    return {status:resp.status(),body: await resp.json()}
-}
 
+    })
+    return { status: updateresponse.status(), body: await updateresponse.json() };
+}
 export async function deleteTodo(request:APIRequestContext,id:number){
     const resp = await request.delete(`/v1/todo/${id}`)
     return resp.status()
@@ -50,4 +50,5 @@ export async function putTodo(request:APIRequestContext,body:{title?:string,stat
     })
     return {status:respons.status(),body: await respons.json()}  
 }
+
 
