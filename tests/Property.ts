@@ -1,8 +1,9 @@
-export const TODOTITLE = {CREATE_TODO_WITHOUT_STATUS:"Creation of todo should work without passing status field",
-CREATE_TODO_WITH_STATUS:"Creation of todo should work when passed status field",
-CREATE_TODO_WITHOUT_TITLE:"Creation of Todo should give 400 when title field is not passed",
-CREATE_TODO_WITH_INVALID_STATUS:"Creation of Todo should give 400 when status value is not either ACTIVE or DONE",
-DELETETODO:"Deletion of todo should work if todo exists",
+export const TODOTITLE = {
+    CREATE_TODO_WITHOUT_STATUS:"Creation of todo should work without passing status field",
+    CREATE_TODO_WITH_STATUS:"Creation of todo should work when passed status field",
+    CREATE_TODO_WITHOUT_TITLE:"Creation of Todo should give 400 when title field is not passed",
+    CREATE_TODO_WITH_INVALID_STATUS:"Creation of Todo should give 400 when status value is not either ACTIVE or DONE",
+    DELETETODO:"Deletion of todo should work if todo exists",
 
 }
 

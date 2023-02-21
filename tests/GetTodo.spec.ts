@@ -63,3 +63,14 @@ test.describe("Create and Get Multiple todo",()=>{
             }
 })
 })
+
+test('Getting All Todo should give list of all todos created recently', async ({ request },testInfo) => {
+    const createdTodos:TodoResponseBody[] = testInfo['todos']
+    const {status,body} = await getAllTodos(request)
+    expect(status).toBe(200)
+    for(const createdTodo of createdTodos){
+     const foundTodo = body.find(returnedTodo=>returnedTodo.id==createdTodo.id)
+     expect(foundTodo?.id).toBe(createdTodo.id)
+     expect(foundTodo?.title).toBe(createdTodo.title)
+    }
+  });
