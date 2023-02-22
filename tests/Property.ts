@@ -4,7 +4,10 @@ export const TODOTITLE = {
     CREATE_TODO_WITHOUT_TITLE:"Creation of Todo should give 400 when title field is not passed",
     CREATE_TODO_WITH_INVALID_STATUS:"Creation of Todo should give 400 when status value is not either ACTIVE or DONE",
     DELETETODO:"Deletion of todo should work if todo exists",
-
+    GETTODO:"Get Existing todo Should Work",
+    GET_NONEXISTING_TODO:"Get non existing todo should work",
+    GET_ALL_RECENTTODOS:"Get all recently created todos",
+    GETTODO_TITLE:"GET_TODOS",
 }
 
 export type RESPONSEBODY = [
