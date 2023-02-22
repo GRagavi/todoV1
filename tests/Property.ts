@@ -8,10 +8,12 @@ export const TODOTITLE = {
 }
 
 export type RESPONSEBODY = [
-    {id: number,
-    title: string,
-    status: string,
-}]
+    {   id:number,
+        title:string,
+        status:string,
+        createdAt:string,
+        updatedAt:string}
+    ]
 export const NULL = null
 export const UNDEFINED = undefined
 export const INVALIDDATA = {title:"Wrong tile",status: "status"}
